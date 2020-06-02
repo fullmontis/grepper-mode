@@ -16,14 +16,14 @@
   :link '(emacs-commentary-link :tag "Help" "grepper"))
 
 (define-derived-mode grepper-mode fundamental-mode "Grepper"
-"Major mode for grepping stuff in a quick manner.
+  "Major mode for interactive grep.
 
 First line contains the string to search. Editing it will change the
 rest of the buffer with a list of the search results.
 
 \\{grepper-mode-map}"
-(grepper-initialize)
-(add-hook 'post-self-insert-hook 'grepper-update nil t))
+  (grepper-initialize)
+  (add-hook 'post-self-insert-hook 'grepper-update nil t))
 
 (setq grepper-previous-search "")
 (setq grepper-result-number 30)
@@ -45,6 +45,7 @@ rest of the buffer with a list of the search results.
 (defun grepper-cd ()
   (interactive)
   (call-interactively 'cd)
+  
   (save-excursion
     (beginning-of-buffer)
     (forward-line 1)
@@ -108,5 +109,5 @@ rest of the buffer with a list of the search results.
                       (put-text-property (point) (+ (point) line-num-end) 'file-column (- search-string-pos line-num-end 1))
                       (overlay-put select-overlay 'face '(:background "dodger blue"))
                       (forward-line 1)))))))))))
-    
-    
+
+(provide 'grepper)

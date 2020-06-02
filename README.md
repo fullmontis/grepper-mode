@@ -1,19 +1,22 @@
-`grepper-mode`
+`grepper`
 ==============
 
-`grepper-mode` is an Emacs major mode for fast grepping. It uses an
+![](grepper.gif)
+
+`grepper` is an Emacs major mode for fast grepping. It uses an
 interactive interface that allows to grep a directory while entering
 each character. Each result has a link that opens the file to the
-shown line.
+shown line and column.
 
 This is very hacky, and just something I put together for my own
 convenience. Chances are high that someone else already did this in a
 better way, but if they did I couldn't find it.
 
-It is important that the buffer `M-x grepper-mode` is launched in is
-empty, because the command will erase the whole content of the
-file. Just open a new scratch buffer. (Technically it should open its
-own buffer, but I was too lazy to figure out how to do it).
+## Usage
+
+The program is launched by using
+
+    M-x grepper
 
 The first line acts as a search bar. Every time the first line it is
 in is edited, the first line is extracted and fed into grep, and the
@@ -26,7 +29,9 @@ The program escapes quotes so they can be used safely.
 
 ## Commands
 
-`grepper-cd` changes the directory to do the searches in.
+`grepper-cd` changes the directory to do the searches in. Editing the
+second line does nothing (it is just there as to show the current
+directory).
 
 ## Dependencies
 

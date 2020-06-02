@@ -1,11 +1,12 @@
 ;;;
 ;;; grepper-mode: A major mode for fast grep searching
+;;; Copyright 2020 Andrea Montagna
 ;;;
 
 ;;; @Bug: searching in large directories without many matches will hang the program even with limited results
 ;;; @Bug: searching for '\"' doesn't work (jumbles up the shell string)
-;;; @Todo: make the program have its own buffer
 ;;; @Todo: make the whole buffer read only except for the first line
+;;; @Todo: allow use of base grep
 
 (defconst grepper-version "0.0.1"
   "Current grepper-mode version number")
@@ -22,20 +23,23 @@ First line contains the string to search. Editing it will change the
 rest of the buffer with a list of the search results.
 
 \\{grepper-mode-map}"
-  (grepper-initialize)
   (add-hook 'post-self-insert-hook 'grepper-update nil t))
 
 (setq grepper-previous-search "")
 (setq grepper-result-number 30)
 
-(defun grepper-initialize ()
-  (erase-buffer)
-  (beginning-of-buffer)
-  (open-line 2)
-  (forward-line 1)
-  (beginning-of-line)
-  (insert default-directory)
-  (beginning-of-buffer))
+(defun grepper ()
+  (interactive)
+  (let ((buffer  (get-buffer-create "*Grepper*")))
+    (switch-to-buffer-other-window buffer)
+    (grepper-mode)
+    (erase-buffer)
+    (beginning-of-buffer)
+    (open-line 2)
+    (forward-line 1)
+    (beginning-of-line)
+    (insert default-directory)
+    (beginning-of-buffer)))
 
 (defun grepper-get-current-grep-line ()
   (save-excursion
